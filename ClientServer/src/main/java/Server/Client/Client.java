@@ -23,6 +23,10 @@ public class Client {
     private List<EnemyBot> listEnemy;
     private List<Item> listItem;
 
+    private List<Item> listDeck;
+    private List<Item> listHand;
+    private List<Item> listTable;
+
     private float x;
     private float z;
 
@@ -35,6 +39,10 @@ public class Client {
         listChest = new ArrayList<>();
         listEnemy = new ArrayList<>();
         listItem = new ArrayList<>();
+
+        listDeck = new ArrayList<>();
+        listHand = new ArrayList<>();
+        listTable = new ArrayList<>();
     }
 
     public Client(String nickname, String password, String email, int gold, boolean status) {
@@ -150,6 +158,46 @@ public class Client {
 
     public void setReady(boolean ready) {
         isReady = ready;
+    }
+
+    public void setListItem(List<Item> listItem) {
+        this.listItem = listItem;
+    }
+
+    public List<Item> getListDeck() {
+        return listDeck;
+    }
+
+    public void setListDeck(List<Item> listDeck) {
+        this.listDeck = listDeck;
+    }
+
+    public List<Item> getListHand() {
+        return listHand;
+    }
+
+    public void setListHand(List<Item> listHand) {
+        this.listHand = listHand;
+    }
+
+    public List<Item> getListTable() {
+        return listTable;
+    }
+
+    public void setListTable(List<Item> listTable) {
+        this.listTable = listTable;
+    }
+
+    public void addListDeck(Item item) {
+        this.listDeck.add(item);
+    }
+
+    public void addListHand(Item item) {
+        this.listHand.add(item);
+    }
+
+    public void addListTable(Item item) {
+        this.listTable.add(item);
     }
 
     public void close() {

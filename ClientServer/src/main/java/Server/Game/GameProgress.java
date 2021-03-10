@@ -52,7 +52,7 @@ public class GameProgress extends Thread {
             e.printStackTrace();
         }
 
-        while (timeRound != 20) {
+        while (timeRound != 10) {
             try {
                 Thread.sleep(1000);
                 timeRound++;
@@ -73,23 +73,52 @@ public class GameProgress extends Thread {
         sendInfo(MessageType.LOADING_GAME, null);
         sendInfo(MessageType.SET_CARD_START, null);
 
-        for (Item item : firstGamer.getListItem()) {
-            try {
-                gameServer.sendMessage(firstGamer.getConnection(), new Message(MessageType.SET_CARD, parseCard(item)));
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        }
+        createHand(firstGamer);
+        //createHand(secondGamer);
 
-//        for (Item item : secondGamer.getListItem()) {
-//            try {
-//                gameServer.sendMessage(secondGamer.getConnection(), new Message(MessageType.SET_CARD, parseCard(item)));
-//            } catch (JsonProcessingException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        sendHand(firstGamer);
+        //sendHand(secondGamer);
 
         sendInfo(MessageType.SET_END, null);
+    }
+
+    private void sendHand(Client gamer) {
+        try {
+            for (Item item : gamer.getListHand()) {
+                gameServer.sendMessage(gamer.getConnection(), new Message(MessageType.SET_CARD_HAND, parseCard(item)));
+            }
+            gameServer.sendMessage(gamer.getConnection(), new Message(MessageType.SET_CARD_DECK, String.valueOf(gamer.getListDeck().size())));
+
+//            if (gamer.getConnection().equals(firstGamer.getConnection())) {
+//                gameServer.sendMessage(gamer.getConnection(), new Message(MessageType.SET_ENEMY_DECK,
+//                        String.valueOf(secondGamer.getListDeck().size())));
+//                gameServer.sendMessage(gamer.getConnection(), new Message(MessageType.SET_ENEMY_HAND,
+//                        String.valueOf(secondGamer.getListHand().size())));
+//                gameServer.sendMessage(gamer.getConnection(), new Message(MessageType.SET_ENEMY_TABLE,
+//                        String.valueOf(secondGamer.getListTable().size())));
+//            } else {
+//                gameServer.sendMessage(gamer.getConnection(), new Message(MessageType.SET_ENEMY_DECK,
+//                        String.valueOf(firstGamer.getListDeck().size())));
+//                gameServer.sendMessage(gamer.getConnection(), new Message(MessageType.SET_ENEMY_HAND,
+//                        String.valueOf(firstGamer.getListHand().size())));
+//                gameServer.sendMessage(gamer.getConnection(), new Message(MessageType.SET_ENEMY_TABLE,
+//                        String.valueOf(firstGamer.getListTable().size())));
+//            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createHand(Client gamer) {
+        if (gamer.getListItem().size() > 4) {
+            for (int i = 0; i < 4; i++) {
+                gamer.addListHand(gamer.getListItem().get(i));
+                gamer.getListItem().remove(i);
+            }
+        } else {
+            gamer.setListHand(gamer.getListItem());
+            gamer.setListItem(null);
+        }
     }
 
     private void startGame() {
@@ -190,7 +219,7 @@ public class GameProgress extends Thread {
         int x, z;
         int typeChest;
 
-        for (int i = 0; i < 20; ) {
+        for (int i = 0; i < 25; ) {
             x = rnd(0, 3000);
             z = rnd(0, 1000);
             typeChest = rnd(0, 3);
@@ -250,7 +279,15 @@ public class GameProgress extends Thread {
         int countItems = rnd(1, 3);
 
         for (int i = 0; i < countItems; i++) {
-            listItems.add(new Item("wolf", rnd(1, 20), rnd(1, 1000)));
+            int rand = rnd(0, 3);
+            if (rand == 0)
+                listItems.add(new Item("wolf", rnd(1, 20), rnd(1, 20)));
+            else if (rand == 1)
+                listItems.add(new Item("snake", rnd(1, 20), rnd(1, 20)));
+            else if (rand == 2)
+                listItems.add(new Item("parrot", rnd(1, 20), rnd(1, 20)));
+            else if (rand == 3)
+                listItems.add(new Item("squirrel", rnd(1, 20), rnd(1, 20)));
         }
         return listItems;
     }

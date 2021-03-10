@@ -44,9 +44,4 @@ public class CardInfoScr : MonoBehaviour// card
     {
         HighLightObj.SetActive(false);
     }
-
-    void Start()
-    {
-        //ShowCardInfo(CardManagerList.allCards[transform.GetSiblingIndex()]);
-    }
 }

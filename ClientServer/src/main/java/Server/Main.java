@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        //DatabaseHelper.connectDatabase();
+        DatabaseHelper.connectDatabase();
 
         Server mainServer = new MainServer();
         Thread threadStartMainServer = new Thread(() -> {

@@ -1,30 +1,17 @@
-﻿using System.Collections;
+﻿using Assets.Scrypts;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Game//canvas
-{
-    public List<Card> EnemyDeck, PlayerDeck;
-
-    public Game()
-    {
-        EnemyDeck = GiveDeckCard();
-        PlayerDeck = GiveDeckCard();
-    }
-
-    List<Card> GiveDeckCard()
-    {
-        List<Card> list = new List<Card>();
-        for (int i = 0; i < 10; i++)
-            list.Add(CardManagerList.allCards[Random.Range(0, CardManagerList.allCards.Count)]);
-        return list;
-    }
-}
-
 public class GameManagerScr : MonoBehaviour
 {
-    public Game CurrentGame;
+    public static List<Card> enemyDeck = new List<Card>();
+    public static List<Card> playerHand = new List<Card>();
+    public static List<Card> enemyHand = new List<Card>();
+    public static List<Card> playerTable = new List<Card>();
+    public static List<Card> enemyTable = new List<Card>();
+
     public Transform EnemyHand, PlayerHand,
                      EnemyField, PlayerFiend;
     public GameObject CardPref;
@@ -43,6 +30,9 @@ public class GameManagerScr : MonoBehaviour
                           EnemyHandCards = new List<CardInfoScr>(),
                           EnemyFieldCards = new List<CardInfoScr>();
 
+    public Text EnemyCountDeckText, PlayerCountDeckText;
+    public static int countDeckPlayer, countDeckEnemy;
+
     public bool IsPlayerTurn
     {
         get
@@ -55,10 +45,8 @@ public class GameManagerScr : MonoBehaviour
     {
         Turn = 0;
 
-        CurrentGame = new Game();
-
-        GiveHandCards(CurrentGame.EnemyDeck, EnemyHand);
-        GiveHandCards(CurrentGame.PlayerDeck, PlayerHand);
+        //GiveHandCards(EnemyDeck, EnemyHand);
+        GiveHandCards(playerHand, PlayerHand);
 
         PlayerHP = EnemyHP = 30;
 
@@ -67,20 +55,19 @@ public class GameManagerScr : MonoBehaviour
 
     void GiveHandCards(List<Card> deck, Transform hand)
     {
-        int i = 0;
-        while (i++ < 4)
-            GiveCardToHand(deck, hand);
+        foreach (Card card in deck)
+        {
+            card.Logo = Resources.Load<Sprite>("Sprites/Cards/" + card.Name);
+            GiveCardToHand(card, hand);
+        }
+        PlayerCountDeckText.text = countDeckPlayer.ToString();
+        EnemyCountDeckText.text = countDeckPlayer.ToString();
     }
 
-    void GiveCardToHand(List<Card> deck, Transform hand)
+    void GiveCardToHand(Card card, Transform hand)
     {
-        if (deck.Count == 0)
-            return;
-
-        Card card = deck[0];
-
         GameObject cardGO = Instantiate(CardPref, hand, false);
-
+        
         if (hand == EnemyHand)
         {
             cardGO.GetComponent<CardInfoScr>().HideCardInfo(card);
@@ -92,8 +79,6 @@ public class GameManagerScr : MonoBehaviour
             PlayerHandCards.Add(cardGO.GetComponent<CardInfoScr>());
             cardGO.GetComponent<AttackedCard>().enabled = false;
         }
-
-        deck.RemoveAt(0);
     }
 
     IEnumerator TurnFunc()
@@ -123,7 +108,7 @@ public class GameManagerScr : MonoBehaviour
             foreach (var card in PlayerFieldCards)
                 card.SelfCard.ChangeAttackState(true);
 
-            while (TurnTime-- > 27)
+            while (TurnTime-- > 29)
             {
                 TurnTimeTxt.text = TurnTime.ToString();
                 yield return new WaitForSeconds(1);
@@ -182,8 +167,7 @@ public class GameManagerScr : MonoBehaviour
 
     void GiveNewCards()
     {
-        GiveCardToHand(CurrentGame.EnemyDeck, EnemyHand);
-        GiveCardToHand(CurrentGame.PlayerDeck, PlayerHand);
+        //GiveCardToHand(playerDeck[0], PlayerHand);
     }
 
     public void CardsFight(CardInfoScr playerCard, CardInfoScr enemyCard)

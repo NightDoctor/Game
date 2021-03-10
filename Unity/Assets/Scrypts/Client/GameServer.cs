@@ -56,7 +56,6 @@ namespace Assets.Scrypts
                                 {
                                     Chest chest = Converter.XmlToChest(message.data);
                                     CharacterGame.listChests.Add(chest);
-                                    ConsoleHelper.WriteMessage(CharacterGame.listChests.Count + " count");
                                 }
                                 if (message.type == MessageType.SET_ENEMY)
                                 {
@@ -81,10 +80,19 @@ namespace Assets.Scrypts
                             message = connection.Receive();
                             if (message != null)
                             {
-                                if (message.type == MessageType.SET_CARD)
+                                if (message.type == MessageType.SET_CARD_HAND)
                                 {
                                     Item item = Converter.XmlToCard(message.data);
-                                    CardManagerList.allCards.Add(new Card(item.name, item.damage, item.health));
+                                    GameManagerScr.playerHand.Add(new Card(item.name, item.damage, item.health));
+                                }
+                                if (message.type == MessageType.SET_CARD_DECK)
+                                {
+                                    GameManagerScr.countDeckPlayer = int.Parse(message.data);
+                                }
+                                if (message.type == MessageType.SET_CARD_TABLE)
+                                {
+                                    Item item = Converter.XmlToCard(message.data);
+                                    GameManagerScr.playerTable.Add(new Card(item.name, item.damage, item.health));
                                 }
                                 if (message.type == MessageType.SET_END)
                                 {

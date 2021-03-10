@@ -67,38 +67,6 @@ namespace Assets.Scrypts
                 if (Input.GetKey(KeyCode.D))
                     gameServer.SendStep("D");
 
-                //if (Input.GetKey(KeyCode.W))
-                //{
-                //    x = transform.position.x;
-                //    z = transform.position.z + 1;
-                //    objCharacter.transform.position = new Vector3(x, 0, z);
-                //    gameServer.SendStep("W");
-                //}
-
-                //if (Input.GetKey(KeyCode.S))
-                //{
-                //    x = transform.position.x;
-                //    z = transform.position.z - 1;
-                //    objCharacter.transform.position = new Vector3(x, 0, z);
-                //    gameServer.SendStep("S");
-                //}
-
-                //if (Input.GetKey(KeyCode.A))
-                //{
-                //    x = transform.position.x - 1;
-                //    z = transform.position.z;
-                //    objCharacter.transform.position = new Vector3(x, 0, z);
-                //    gameServer.SendStep("A");
-                //}
-
-                //if (Input.GetKey(KeyCode.D))
-                //{
-                //    x = transform.position.x + 1;
-                //    z = transform.position.z;
-                //    objCharacter.transform.position = new Vector3(x, 0, z);
-                //    gameServer.SendStep("D");
-                //}
-
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     gameServer.SendStep("DOWN_E");

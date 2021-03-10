@@ -63,7 +63,6 @@ namespace Assets.Scrypts
             var serializer = new XmlSerializer(typeof(EnemyBot));
             using (var xmlStream = new StringReader(s))
             {
-                ConsoleHelper.WriteMessage(s);
                 message = (EnemyBot)serializer.Deserialize(xmlStream);
             }
             return message;

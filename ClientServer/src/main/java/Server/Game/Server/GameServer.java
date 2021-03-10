@@ -188,11 +188,15 @@ public class GameServer extends Server {
                 Client firstGamer = gamerList.get(idGamerInList);
                 gamerList.remove(firstGamer);
 
-//                idGamerInList = GameProgress.rnd(0, listSize - 2);
-//                Client secondGamer = gamerList.get(idGamerInList);
-//                gamerList.remove(secondGamer);
+                idGamerInList = GameProgress.rnd(0, listSize - 2);
+                Client secondGamer = null;//= gamerList.get(idGamerInList);
+                gamerList.remove(secondGamer);
+                /**
+                 * Какая же это постная хуета, я не могу, это полная хуета. Это постнейшая шляпа для полнейших дуралеев.
+                 * Сценарист явно курил что-то запрещенное
+                */
 
-                GameProgress thread = new GameProgress(firstGamer, null);
+                GameProgress thread = new GameProgress(firstGamer, secondGamer);
                 thread.start();
                 gameProgresses.add(thread);
             }
