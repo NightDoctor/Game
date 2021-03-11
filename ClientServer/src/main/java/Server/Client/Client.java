@@ -5,6 +5,7 @@ import Server.Game.Chest.Chest;
 import Server.Game.Enemy.EnemyBot;
 import Server.Game.Item.Item;
 
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class Client {
     private int id;
     private String nickname;
     private Connection connection;
+    private Socket socket;
     private boolean status;
     private String password;
     private String email;
@@ -202,5 +204,13 @@ public class Client {
 
     public void close() {
         connection.close();
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
+    public Socket getSocket() {
+        return socket;
     }
 }

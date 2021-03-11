@@ -30,9 +30,7 @@ namespace Assets.Scrypts
             listChests = new List<Chest>();
             listEnemy = new List<EnemyBot>();
             gameServer = new GameServer();
-            //gameServer.StartClient("176.117.134.51", 14883);//Maks
-            //gameServer.StartClient("93.100.216.84", 3001);//My
-            gameServer.StartClient("localhost", 3001);
+            gameServer.StartClient("93.100.216.84", 3001);
             gameServer.ConnectToServer();
             gameServer.StartMain();
         }

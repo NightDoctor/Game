@@ -19,9 +19,7 @@ namespace Assets.Scrypts
             client = new ClientServer();
             Debug.Log("Start app, client = " + Client.online);
 
-            //client.StartClient("176.117.134.51", 14882);//Maks
-            //client.StartClient("93.100.216.84", 3000);//My
-            client.StartClient("localhost", 3000);
+            client.StartClient("93.100.216.84", 3000);
             if (!Account.CheckCharacter())
             {
                 //authorizationMenuUI = Resources.Load<GameObject>("Authorization") as GameObject;

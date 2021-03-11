@@ -16,6 +16,7 @@ import java.util.List;
 
 public abstract class Server implements SendMessage, ServerMainLoop {
     public static List<Client> connectionList = new ArrayList<>();
+    public static List<Thread> threadList = new ArrayList<>();
 
     public abstract void startHandler(Socket socket);
 
@@ -37,6 +38,7 @@ public abstract class Server implements SendMessage, ServerMainLoop {
                 Socket finalSocket = socket;
                 Thread threadHandler = new Thread(() -> startHandler(finalSocket));
                 threadHandler.start();
+                threadList.add(threadHandler);
             }
         }
     }
@@ -117,9 +119,11 @@ public abstract class Server implements SendMessage, ServerMainLoop {
     public static void clientRemove(Client client, boolean isGame) {
         if (isGame) {
             client.close();
-            connectionList.remove(client);
+
+            threadList.get(0).interrupt();
             //DatabaseHelper.setStatus(client.getId(), false);
         }
+
         ConsoleHelper.writeMessage("Client " + client.getConnection() + " disconnected");
     }
 }

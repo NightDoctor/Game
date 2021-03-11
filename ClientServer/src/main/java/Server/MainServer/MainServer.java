@@ -44,7 +44,7 @@ public class MainServer extends Server implements SendBroadcast {
                     return;
                 }
             }
-            sendBroadcastMessage(new Message(MessageType.USER_ADDED, client.getNickname()));
+            client.setSocket(socket);
             serverMainLoop(client);
         } catch (IOException e) {
             ConsoleHelper.writeMessage("Ошибка при обмене данными с удаленным адресом " + e.getMessage());
@@ -65,6 +65,7 @@ public class MainServer extends Server implements SendBroadcast {
                         client.setOnline(true);
                     } else if (message.getType() == MessageType.GAME) {
                         clientGoGame(client);
+                        return;
                     } else {
                         ConsoleHelper.writeMessage("Error type " + message.getType() + " " + message.getData());
                     }
@@ -110,7 +111,6 @@ public class MainServer extends Server implements SendBroadcast {
     private void clientGoGame(Client client) {
         connectionList.remove(client);
         clientRemove(client, true);
-        GameServer.potentialPlayersList.add(client);
         GameServer.potentialPlayersList.add(client);
         ConsoleHelper.writeMessage("Client " + client.getNickname() + " goes to game");
     }
