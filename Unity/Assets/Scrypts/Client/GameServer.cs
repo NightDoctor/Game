@@ -94,6 +94,18 @@ namespace Assets.Scrypts
                                     Item item = Converter.XmlToCard(message.data);
                                     GameManagerScr.playerTable.Add(new Card(item.name, item.damage, item.health));
                                 }
+                                if (message.type == MessageType.SET_ENEMY_DECK)
+                                {
+                                    GameManagerScr.countDeckEnemy = int.Parse(message.data);
+                                }
+                                if (message.type == MessageType.SET_ENEMY_HAND)
+                                {
+                                    GameManagerScr.enemyHand = int.Parse(message.data);
+                                }
+                                if (message.type == MessageType.SET_ENEMY_DECK)
+                                {
+                                    GameManagerScr.enemyDeck = int.Parse(message.data);
+                                }
                                 if (message.type == MessageType.SET_END)
                                 {
                                     //CharacterGame.isSpawn = true;

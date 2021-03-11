@@ -87,7 +87,8 @@ public class GameProgress extends Thread {
             for (Item item : gamer.getListHand()) {
                 gameServer.sendMessage(gamer.getConnection(), new Message(MessageType.SET_CARD_HAND, parseCard(item)));
             }
-            gameServer.sendMessage(gamer.getConnection(), new Message(MessageType.SET_CARD_DECK, String.valueOf(gamer.getListDeck().size())));
+            gameServer.sendMessage(gamer.getConnection(), new Message(MessageType.SET_CARD_DECK,
+                    String.valueOf(gamer.getListDeck().size())));
 
 //            if (gamer.getConnection().equals(firstGamer.getConnection())) {
 //                gameServer.sendMessage(gamer.getConnection(), new Message(MessageType.SET_ENEMY_DECK,
@@ -115,10 +116,11 @@ public class GameProgress extends Thread {
                 gamer.addListHand(gamer.getListItem().get(i));
                 gamer.getListItem().remove(i);
             }
+            gamer.setListDeck(gamer.getListItem());
         } else {
             gamer.setListHand(gamer.getListItem());
-            gamer.setListItem(null);
         }
+        gamer.setListItem(null);
     }
 
     private void startGame() {
@@ -219,7 +221,7 @@ public class GameProgress extends Thread {
         int x, z;
         int typeChest;
 
-        for (int i = 0; i < 25; ) {
+        for (int i = 0; i < 35; ) {
             x = rnd(0, 3000);
             z = rnd(0, 1000);
             typeChest = rnd(0, 3);

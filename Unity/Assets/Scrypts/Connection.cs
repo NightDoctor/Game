@@ -20,7 +20,14 @@ namespace Assets.Scrypts
         public void Send(Message message)
         {
             writer.WriteLine(message.xml);
-            writer.Flush();
+            try
+            {
+                writer.Flush();
+            }
+            catch (Exception)
+            {
+                writer.Flush();
+            }
         }
 
         public Message Receive()

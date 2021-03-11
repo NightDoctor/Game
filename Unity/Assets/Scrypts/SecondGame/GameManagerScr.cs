@@ -1,16 +1,15 @@
-﻿using Assets.Scrypts;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManagerScr : MonoBehaviour
 {
-    public static List<Card> enemyDeck = new List<Card>();
     public static List<Card> playerHand = new List<Card>();
-    public static List<Card> enemyHand = new List<Card>();
     public static List<Card> playerTable = new List<Card>();
+
     public static List<Card> enemyTable = new List<Card>();
+    public static int enemyHand, enemyDeck;
 
     public Transform EnemyHand, PlayerHand,
                      EnemyField, PlayerFiend;
@@ -60,6 +59,7 @@ public class GameManagerScr : MonoBehaviour
             card.Logo = Resources.Load<Sprite>("Sprites/Cards/" + card.Name);
             GiveCardToHand(card, hand);
         }
+
         PlayerCountDeckText.text = countDeckPlayer.ToString();
         EnemyCountDeckText.text = countDeckPlayer.ToString();
     }

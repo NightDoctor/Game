@@ -1587,8 +1587,8 @@ MonoBehaviour:
   PlayerFieldCards: []
   EnemyHandCards: []
   EnemyFieldCards: []
-  EnemyCountDeckText: {fileID: 0}
-  PlayerCountDeckText: {fileID: 0}
+  EnemyCountDeckText: {fileID: 785467598}
+  PlayerCountDeckText: {fileID: 1178393085}
 --- !u!1 &1215065663
 GameObject:
   m_ObjectHideFlags: 0
