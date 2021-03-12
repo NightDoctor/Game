@@ -3,6 +3,7 @@ package Server.MainServer;
 import Server.Client.Client;
 import Server.Connection;
 import Server.ConsoleHelper;
+import Server.Game.Item.Item;
 import Server.Game.Server.GameServer;
 import Server.Server;
 import Server.Database.DatabaseHelper;
@@ -16,6 +17,7 @@ import java.net.Socket;
 import java.sql.Struct;
 
 public class MainServer extends Server implements SendBroadcast {
+    GameServer gameServer = new GameServer();
 
     @Override
     public void startHandler(Socket socket) {
@@ -66,6 +68,35 @@ public class MainServer extends Server implements SendBroadcast {
                     } else if (message.getType() == MessageType.GAME) {
                         clientGoGame(client);
                         return;
+                    } else if (message.getType() == MessageType.W) {
+                        client.setZ(client.getZ() + 1);
+                        gameServer.checkEnemyAndChest(client);
+                        client.setOnline(true);
+                    } else if (message.getType() == MessageType.A) {
+                        client.setX(client.getX() - 1);
+                        gameServer.checkEnemyAndChest(client);
+                        client.setOnline(true);
+                    } else if (message.getType() == MessageType.S) {
+                        client.setZ(client.getZ() - 1);
+                        gameServer.checkEnemyAndChest(client);
+                        client.setOnline(true);
+                    } else if (message.getType() == MessageType.D) {
+                        client.setX(client.getX() + 1);
+                        gameServer.checkEnemyAndChest(client);
+                        client.setOnline(true);
+                    } else if (message.getType() == MessageType.DOWN_E && gameServer.checkChest(client) != null) {
+                        gameServer.chest = gameServer.checkChest(client);
+                        if (!gameServer.chest.isOpen()) {
+                            for (Item item : gameServer.chest.getListItem()) {
+                                client.addListItem(item);
+                            }
+                            gameServer.chest.setOpen(true);
+                        }
+                        client.setOnline(true);
+                    } else if (message.getType() == MessageType.UP_E && gameServer.checkChest(client) != null) {
+                        client.setOnline(true);
+                    } else if (message.getType() == MessageType.READY) {
+                        client.setReady(true);
                     } else {
                         ConsoleHelper.writeMessage("Error type " + message.getType() + " " + message.getData());
                     }
@@ -109,9 +140,10 @@ public class MainServer extends Server implements SendBroadcast {
     }
 
     private void clientGoGame(Client client) {
-        connectionList.remove(client);
-        clientRemove(client, true);
-        GameServer.potentialPlayersList.add(client);
+        //connectionList.remove(client);
+        //clientRemove(client, true);
+        //GameServer.potentialPlayersList.add(client);
+        GameServer.gamerList.add(client);
         ConsoleHelper.writeMessage("Client " + client.getNickname() + " goes to game");
     }
 }

@@ -17,7 +17,8 @@ namespace Assets.Scrypts
         public static bool roundFirst, roundSecond = false;
         public static bool isSpawn = false;
         public static bool isTimer = false;
-        private GameServer gameServer;
+        //private GameServer gameServer;
+        private ClientServer client;
         public Text timer;
         private int time;
 
@@ -29,10 +30,11 @@ namespace Assets.Scrypts
             objEnemy = Resources.Load<GameObject>("Enemy") as GameObject;
             listChests = new List<Chest>();
             listEnemy = new List<EnemyBot>();
-            gameServer = new GameServer();
-            gameServer.StartClient("93.100.216.84", 3001);
-            gameServer.ConnectToServer();
-            gameServer.StartMain();
+            client = new ClientServer();
+            //gameServer = new GameServer();
+            //gameServer.StartClient("93.100.216.84", 3001);
+            //gameServer.ConnectToServer();
+            //gameServer.StartMain();
         }
 
         void Update()
@@ -57,22 +59,22 @@ namespace Assets.Scrypts
                 z = Input.GetAxisRaw("Vertical");
                 objCharacter.transform.position += new Vector3(x, 0, z);
                 if (Input.GetKey(KeyCode.W))
-                    gameServer.SendStep("W");
+                    client.SendStep("W");
                 if (Input.GetKey(KeyCode.S))
-                    gameServer.SendStep("S");
+                    client.SendStep("S");
                 if (Input.GetKey(KeyCode.A))
-                    gameServer.SendStep("A");
+                    client.SendStep("A");
                 if (Input.GetKey(KeyCode.D))
-                    gameServer.SendStep("D");
+                    client.SendStep("D");
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    gameServer.SendStep("DOWN_E");
+                    client.SendStep("DOWN_E");
                 }
 
                 if (Input.GetKeyUp(KeyCode.E))
                 {
-                    gameServer.SendStep("UP_E");
+                    client.SendStep("UP_E");
                 }
             }
             else if (roundSecond)

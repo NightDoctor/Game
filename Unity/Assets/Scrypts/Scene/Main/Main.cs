@@ -77,7 +77,7 @@ namespace Assets.Scrypts
         public void StartGame()
         {
             client.SendTextMessage(new Message(MessageType.GAME));
-            client.checkThread.Abort();
+            //client.checkThread.Abort();
             SceneManager.LoadScene("FirstGame");
         }
     }

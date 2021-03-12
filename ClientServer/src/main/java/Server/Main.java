@@ -21,14 +21,14 @@ public class Main {
         threadStartMainServer.start();
 
         GameServer gameServer = new GameServer();
-        Thread threadStartGameServer = new Thread(() -> {
-            try {
-                gameServer.start(3001);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        threadStartGameServer.start();
+//        Thread threadStartGameServer = new Thread(() -> {
+//            try {
+//                gameServer.start(3001);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        });
+//        threadStartGameServer.start();
 
         Thread threadCreateAPairOfPlayers = new Thread(() -> gameServer.createAPairOfPlayers());
         threadCreateAPairOfPlayers.start();

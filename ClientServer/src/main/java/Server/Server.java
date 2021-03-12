@@ -31,6 +31,7 @@ public abstract class Server implements SendMessage, ServerMainLoop {
                 Socket socket = null;
                 try {
                     socket = serverSocket.accept();
+                    serverSocket.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -47,7 +48,6 @@ public abstract class Server implements SendMessage, ServerMainLoop {
         while (true) {
             connection.send(new Message(MessageType.CONNECTION_REQUEST));
             Message message = connection.receive();
-
             if (message != null) {
                 if (message.getType() == MessageType.CONNECTION_ACCEPTED) {
                     Client client = new Client(connection);
